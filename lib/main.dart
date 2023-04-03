@@ -60,6 +60,9 @@ class _MyHomePageState extends State<MyHomePage> {
         id: 10,
         channelKey: channelKey,
         title: 'Simple Notification',
+        bigPicture:
+            "https://images.unsplash.com/photo-1555485898-0f23a85a607f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+        notificationLayout: NotificationLayout.BigPicture,
       ),
     );
   }
@@ -71,10 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Notification'),
       ),
       body: Center(
-          child: ElevatedButton(
-        onPressed: triggerNotification,
-        child: const Text('Trigger Notification'),
-      )),
+        child: ElevatedButton(
+          onPressed: triggerNotification,
+          child: const Text('Trigger Notification'),
+        ),
+      ),
     );
   }
 }
