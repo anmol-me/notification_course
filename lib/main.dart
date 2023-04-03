@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
+const channelKey = 'basic_channel';
+
 void main() {
   AwesomeNotifications().initialize(
     null,
     [
       NotificationChannel(
-        channelKey: 'channel_key',
-        channelName: 'channel_name',
+        channelKey: channelKey,
+        channelName: 'Basic Notifications',
         channelDescription: 'channel_Description',
       ),
     ],
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -51,8 +54,27 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  triggerNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10,
+        channelKey: channelKey,
+        title: 'Simple Notification',
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Notification'),
+      ),
+      body: Center(
+          child: ElevatedButton(
+        onPressed: triggerNotification,
+        child: const Text('Trigger Notification'),
+      )),
+    );
   }
 }
