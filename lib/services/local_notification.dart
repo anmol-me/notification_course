@@ -34,6 +34,38 @@ class LocalNotification {
     );
   }
 
+  // Action Button
+  static Future<void> showNotificationWithActionButtons(
+    int id,
+  ) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: channelKey,
+        title: 'Anonymous says:',
+        body: 'Hi there!',
+      ),
+      actionButtons: [
+        NotificationActionButton(
+          key: 'READ',
+          label: 'Mark as read',
+          // label: 'Reply',
+          // requireInputText: true,
+          autoDismissible: true,
+        ),
+        NotificationActionButton(
+          key: 'DISMISS',
+          label: 'Dismiss',
+          actionType: ActionType.DismissAction,
+          autoDismissible: true,
+          // enabled: false,
+          // color: Colors.green,
+          // isDangerousOption: true,
+        ),
+      ],
+    );
+  }
+
   static cancelScheduleNotification(int id) async {
     await AwesomeNotifications().cancelSchedule(id);
   }

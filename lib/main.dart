@@ -55,13 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const ElevatedButton(
-              onPressed: LocalNotification.scheduleNotification,
-              child: Text('Schedule Notification'),
-            ),
             ElevatedButton(
-              onPressed: () => LocalNotification.cancelScheduleNotification(10),
-              child: const Text('Cancel Schedule Notification'),
+              onPressed: () =>
+                  LocalNotification.showNotificationWithActionButtons(10),
+              child: const Text('Action Button'),
             ),
           ],
         ),
