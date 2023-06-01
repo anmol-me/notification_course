@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:notification_course/services/local_notification.dart';
@@ -8,15 +10,24 @@ const channelKey = 'basic_channel';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationController().initializeLocalNotification(debug: true);
+  await NotificationController.initializeNotificationsEventListeners();
+
+  scheduleMicrotask(() async {
+    await NotificationController.getInitialNotification();
+  });
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static final navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -43,8 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-
-    NotificationController.initializeNotificationsEventListeners();
   }
 
   @override
@@ -58,9 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () =>
-                  LocalNotification.showNotificationWithActionButtons(10),
-              child: const Text('Action Button'),
+              onPressed: () async =>
+                  await LocalNotification.createBasicNotificationWithPayload(),
+              child: const Text('Trigger Button'),
             ),
           ],
         ),

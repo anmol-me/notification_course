@@ -3,8 +3,20 @@ import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:notification_course/temp_screen.dart';
 
 import '../main.dart';
+
+navigateHelper(ReceivedAction receivedAction) {
+  if (receivedAction.payload != null &&
+      receivedAction.payload!['screen_name'] == 'TEMP_SCREEN') {
+    MyApp.navigatorKey.currentState!.push(
+      MaterialPageRoute(
+        builder: (context) => const TempScreen(),
+      ),
+    );
+  }
+}
 
 class NotificationController extends ChangeNotifier {
   // Singleton Pattern
@@ -62,6 +74,8 @@ class NotificationController extends ChangeNotifier {
 
     log(message);
 
+    navigateHelper(receivedAction);
+
     if (receivedAction.buttonKeyPressed == 'SUBSCRIBE') {
       log('Subscribe action button was pressed');
     } else if (receivedAction.buttonKeyPressed == 'DISMISS') {
@@ -113,5 +127,16 @@ class NotificationController extends ChangeNotifier {
       backgroundColor: Colors.blue,
       gravity: ToastGravity.BOTTOM,
     );
+  }
+
+  static Future<void> getInitialNotification() async {
+    ReceivedAction? receivedAction =
+        await AwesomeNotifications().getInitialNotificationAction(
+      removeFromActionEvents: true,
+    );
+
+    if (receivedAction == null) return;
+
+    navigateHelper(receivedAction);
   }
 }
