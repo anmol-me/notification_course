@@ -46,6 +46,14 @@ class NotificationController extends ChangeNotifier {
           // playSound: true,
           // soundSource: 'resource://raw/naruto_jutsu',
         ),
+        NotificationChannel(
+          channelKey: channelChatKey,
+          channelGroupKey: channelChatGroupKey,
+          channelName: 'Group Chat',
+          channelDescription: 'This is group chat.',
+          channelShowBadge: true,
+          importance: NotificationImportance.Max,
+        ),
       ],
       debug: debug,
     );

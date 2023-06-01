@@ -6,6 +6,8 @@ import 'package:notification_course/services/local_notification.dart';
 import 'package:notification_course/services/notification_controller.dart';
 
 const channelKey = 'basic_channel';
+const channelChatKey = 'chat_channel';
+const channelChatGroupKey = 'chat_group_channel';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,8 +70,15 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             ElevatedButton(
               onPressed: () async =>
-                  await LocalNotification.createBasicNotificationWithPayload(),
-              child: const Text('Trigger Button'),
+                  await LocalNotification.createMessagingNotification(
+                channelKey: channelChatKey,
+                groupKey: 'Guy_group',
+                chatName: 'Guy Group',
+                username: 'Guy',
+                message: 'Guy has sent a message.',
+                largeIcon: 'asset://assets/profile_photo.jpg',
+              ),
+              child: const Text('Chat Notification'),
             ),
           ],
         ),
