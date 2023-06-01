@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -58,7 +60,13 @@ class NotificationController extends ChangeNotifier {
     var message =
         "${isSilent ? 'Silent Action' : 'Acton'} notification received";
 
-    debugPrint(message);
+    log(message);
+
+    if (receivedAction.buttonKeyPressed == 'SUBSCRIBE') {
+      log('Subscribe action button was pressed');
+    } else if (receivedAction.buttonKeyPressed == 'DISMISS') {
+      log('Dismiss action button was pressed');
+    }
 
     Fluttertoast.showToast(
       msg: message,
@@ -71,7 +79,7 @@ class NotificationController extends ChangeNotifier {
   static Future<void> onNotificationCreatedMethod(
     ReceivedNotification receivedAction,
   ) async {
-    debugPrint('Notification created');
+    log('Notification created');
 
     Fluttertoast.showToast(
       msg: 'Notification created',
@@ -84,7 +92,7 @@ class NotificationController extends ChangeNotifier {
   static Future<void> onNotificationDisplayedMethod(
     ReceivedNotification receivedAction,
   ) async {
-    debugPrint('Notification displayed');
+    log('Notification displayed');
 
     Fluttertoast.showToast(
       msg: 'Notification displayed',
@@ -97,7 +105,7 @@ class NotificationController extends ChangeNotifier {
   static Future<void> onDismissActionReceivedMethod(
     ReceivedAction receivedAction,
   ) async {
-    debugPrint('Notification dismiss');
+    log('Notification dismiss');
 
     Fluttertoast.showToast(
       msg: 'Notification dismiss',

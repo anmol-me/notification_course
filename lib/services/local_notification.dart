@@ -47,8 +47,8 @@ class LocalNotification {
       ),
       actionButtons: [
         NotificationActionButton(
-          key: 'READ',
-          label: 'Mark as read',
+          key: 'SUBSCRIBE',
+          label: 'Subscribe',
           // label: 'Reply',
           // requireInputText: true,
           autoDismissible: true,
@@ -56,11 +56,11 @@ class LocalNotification {
         NotificationActionButton(
           key: 'DISMISS',
           label: 'Dismiss',
-          actionType: ActionType.DismissAction,
+          actionType: ActionType.Default,
           autoDismissible: true,
           // enabled: false,
           // color: Colors.green,
-          // isDangerousOption: true,
+          isDangerousOption: true,
         ),
       ],
     );
