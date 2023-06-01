@@ -3,6 +3,7 @@ import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:notification_course/services/local_notification.dart';
 import 'package:notification_course/temp_screen.dart';
 
 import '../main.dart';
@@ -82,12 +83,11 @@ class NotificationController extends ChangeNotifier {
 
     log(message);
 
-    navigateHelper(receivedAction);
+    // navigateHelper(receivedAction);
 
-    if (receivedAction.buttonKeyPressed == 'SUBSCRIBE') {
-      log('Subscribe action button was pressed');
-    } else if (receivedAction.buttonKeyPressed == 'DISMISS') {
-      log('Dismiss action button was pressed');
+    if (receivedAction.channelKey == channelChatKey) {
+      // REPLY
+      receiveChatNotificationAction(receivedAction);
     }
 
     Fluttertoast.showToast(
@@ -96,6 +96,25 @@ class NotificationController extends ChangeNotifier {
       backgroundColor: Colors.blue,
       gravity: ToastGravity.BOTTOM,
     );
+  }
+
+  // REPLY
+  static Future<void> receiveChatNotificationAction(
+    ReceivedAction receivedAction,
+  ) async {
+    if (receivedAction.buttonKeyPressed == 'REPLY') {
+      await LocalNotification.createMessagingNotification(
+        channelKey: channelChatKey,
+        groupKey: receivedAction.groupKey!,
+        chatName: receivedAction.summary!,
+        username: 'you',
+        message: receivedAction.buttonKeyInput,
+        largeIcon:
+            'https://images.unsplash.com/photo-1685443866545-57adcff6e0be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80',
+      );
+    } else {
+      //
+    }
   }
 
   static Future<void> onNotificationCreatedMethod(
