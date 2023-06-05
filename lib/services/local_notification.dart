@@ -22,7 +22,6 @@ class LocalNotification {
   }
 
   /// CHAT NOTIFICATION
-
   static Future<void> createMessagingNotification({
     required String channelKey,
     required String groupKey,
@@ -57,5 +56,93 @@ class LocalNotification {
         )
       ],
     );
+  }
+
+  /// PROGRESS BAR NOTIFICATION
+  static Future<void> showIndeterminateProgressNotification(int id) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: channelKey,
+        title: 'Downloading pdf...',
+        body: 'file.pdf',
+        payload: {'file': 'file.pdf'},
+        category: NotificationCategory.Progress,
+        notificationLayout: NotificationLayout.ProgressBar,
+        progress: null,
+        locked: true,
+      ),
+    );
+
+    await Future.delayed(const Duration(seconds: 5));
+
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: channelKey,
+        title: 'Download finished',
+        body: 'file.pdf',
+        category: NotificationCategory.Progress,
+        locked: false,
+      ),
+    );
+  }
+
+  static int currentStep = 0;
+
+  static Future<void> showProgressNotification(int id) async {
+    int maxStep = 10;
+
+    for (int stimulatedStep = 0;
+        stimulatedStep <= maxStep + 1;
+        stimulatedStep++) {
+      currentStep = stimulatedStep;
+
+      await Future.delayed(const Duration(seconds: 1));
+
+      _updateCurrentProgressBar(
+        id: id,
+        stimulatedStep: stimulatedStep,
+        maxStep: maxStep,
+      );
+    }
+  }
+
+  static void _updateCurrentProgressBar({
+    required int id,
+    required int stimulatedStep,
+    required int maxStep,
+  }) {
+    // Finished
+    if (stimulatedStep > maxStep) {
+      AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: id,
+          channelKey: channelKey,
+          title: 'Download finished',
+          body: 'file.pdf',
+          category: NotificationCategory.Progress,
+          locked: false,
+        ),
+      );
+    }
+    // in-Progress
+    else {
+      int progress = min((stimulatedStep / maxStep * 100).round(), 100);
+
+      AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: id,
+          channelKey: channelKey,
+          title: 'Downloading pdf in progress ($progress%)',
+          body: 'file.pdf',
+          payload: {'file': 'file.pdf'},
+          category: NotificationCategory.Progress,
+          notificationLayout: NotificationLayout.ProgressBar,
+          progress: progress,
+          locked: true,
+        ),
+      );
+    }
   }
 }

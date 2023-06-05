@@ -69,16 +69,13 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () async =>
-                  await LocalNotification.createMessagingNotification(
-                channelKey: channelChatKey,
-                groupKey: 'Guy_group',
-                chatName: 'Guy Group',
-                username: 'Guy',
-                message: 'Guy has sent a message.',
-                largeIcon: 'asset://assets/profile_photo.jpg',
-              ),
-              child: const Text('Chat Notification'),
+              onPressed: () =>
+                  LocalNotification.showIndeterminateProgressNotification(19),
+              child: const Text('Show indefinite progress'),
+            ),
+            ElevatedButton(
+              onPressed: () => LocalNotification.showProgressNotification(2),
+              child: const Text('Show Progress'),
             ),
           ],
         ),
