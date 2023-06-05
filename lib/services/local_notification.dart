@@ -158,4 +158,20 @@ class LocalNotification {
       ),
     );
   }
+
+  /// Wake Up Notification
+  // Wake up permission added
+  static Future<void> showWakeUpNotification(int id) async {
+    await Future.delayed(const Duration(seconds: 5));
+
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: channelKey,
+        title: 'Hey Wake up',
+        body: 'Sleepy!',
+        wakeUpScreen: true,
+      ),
+    );
+  }
 }

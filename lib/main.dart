@@ -81,6 +81,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () => LocalNotification.showEmojiNotification(1),
               child: const Text('Show Emojis Notification'),
             ),
+            ElevatedButton(
+              onPressed: () => LocalNotification.showWakeUpNotification(1),
+              child: const Text('Show WakeUp Notification'),
+            ),
           ],
         ),
       ),
