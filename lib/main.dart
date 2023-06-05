@@ -77,6 +77,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () => LocalNotification.showProgressNotification(2),
               child: const Text('Show Progress'),
             ),
+            ElevatedButton(
+              onPressed: () => LocalNotification.showEmojiNotification(1),
+              child: const Text('Show Emojis Notification'),
+            ),
           ],
         ),
       ),

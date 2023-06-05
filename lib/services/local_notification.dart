@@ -145,4 +145,17 @@ class LocalNotification {
       );
     }
   }
+
+  /// Emoji Notification
+  static Future<void> showEmojiNotification(int id) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: channelKey,
+        title: 'Emoji -> 😍',
+        body: '${Emojis.activites_firecracker} Boom!',
+        category: NotificationCategory.Social,
+      ),
+    );
+  }
 }
